@@ -15,6 +15,7 @@ class SiteController extends Controller
 {
     public function actionEntry()
     {
+        
         $model = new EntryForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -34,7 +35,7 @@ class SiteController extends Controller
         return $this -> render('say', ['message' => $message]);
     }
 
-    public function actionSayHello($message = 'Helloo')
+    public function actionSayHello($message = 'Hello')
     {
         return $this -> render('say', ['message' => $message]);
     }

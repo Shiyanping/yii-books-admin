@@ -4,41 +4,24 @@
 
 ## 建库，建表
 
-创建一个名为 `yideng` 的数据库，下面有名为 `books` 的数据表。
+创建一个名为 `yideng` 的数据库，下面有名为 `book` 的数据表。
 
 建表语句如下：
 
 ```sql
-CREATE TABLE `books` (
+CREATE TABLE `book` (
   `id` CHAR(2) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` CHAR(52) NOT NULL,
-  `author` CHAR(20) NOT NULL
+  `name` CHAR(50) NOT NULL,
+  `author` CHAR(50) NOT NULL,
+  `time` DATETIME NOT NULL,
+  `library_id` INT(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `books` VALUES (1,'你不知道的JavaScript','KYLE SIMPSON');
-INSERT INTO `books` VALUES (2,'别让不好意思害了你','周伟力');
-INSERT INTO `books` VALUES (3,'从你的全世界路过','张嘉佳');
+INSERT INTO `book` VALUES (1,'你不知道的JavaScript','KYLE SIMPSON', '2018-12-12 00:00:00', 1);
+INSERT INTO `book` VALUES (2,'别让不好意思害了你','周伟力', '2018-12-12 00:00:00', 1);
+INSERT INTO `book` VALUES (3,'从你的全世界路过','张嘉佳', '2018-12-12 00:00:00', 1);
 ```
 
-## 项目结构
+## 创建项目
 
-### view
-
-`view` 文件夹下有个 `books` 的文件夹，放图书的管理界面。
-
-```
-├── add.php
-├── delete.php
-├── index.php
-└── update.php
-```
-
-修改功能实在不知道怎么操作了，所以用了一下 `ajax`。
-
-### model
-
-`models` 下的 `Books.php`，专门放图书的数据模型。
-
-### controller
-
-`controllers` 下的 `BooksController.php`，放对应的图书操作。
+通过 gii 进行工程构建
