@@ -8,12 +8,15 @@ use app\models\BookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * BookController implements the CRUD actions for Book model.
  */
 class BookController extends Controller
 {
+    // 关闭 csrf 提供给 node 处理
+    public $enableCsrfValidation = false;
     /**
      * {@inheritdoc}
      */
@@ -38,10 +41,12 @@ class BookController extends Controller
         $searchModel = new BookSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        YII::$app->response->format = Response::FORMAT_JSON;  // 指定输出头为json
+        return $dataProvider->getModels();
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
     }
 
     /**
@@ -64,15 +69,21 @@ class BookController extends Controller
      */
     public function actionCreate()
     {
+        $result = array("code"=>0, "message"=>"");
         $model = new Book();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $result['message'] = "ok";
+            // return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            $result['code'] = 500;
+            $result['message'] = "no";
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        YII::$app->response->format = Response::FORMAT_JSON;  // 指定输出头为json
+        return $result;
+        // return $this->render('create', [
+        //     'model' => $model,
+        // ]);
     }
 
     /**
